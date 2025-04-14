@@ -59,6 +59,7 @@ class User extends BaseEntity implements UserInterface, PasswordAuthenticatedUse
         $this->library = new ArrayCollection();
         $this->borrowings = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->setRoles(['ROLE_USER']);
     }
 
     public function getEmail(): ?string

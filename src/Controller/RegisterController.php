@@ -23,6 +23,9 @@ final class RegisterController extends AbstractController{
     ): Response
     {
         $user = $this->userManager->register($registerDto);
-        return $this->json($user, Response::HTTP_CREATED);
+        if ($user === null) {
+           return $this->json("user exist", Response::HTTP_BAD_REQUEST);
+        }
+        return $this->json($user->getEmail(), Response::HTTP_CREATED);
     }
 }

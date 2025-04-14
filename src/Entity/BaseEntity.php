@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
 // Extend this class to have basic fields, id, createdAt..
@@ -12,10 +11,10 @@ use Symfony\Component\Uid\Uuid;
 class BaseEntity
 {
     #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
+    #[ORM\Column(type: 'string', length: 36, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?Uuid $id = null;
+    private ?string $id = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -35,7 +34,7 @@ class BaseEntity
         $this->isActif = true;
     }
 
-    public function getId(): ?Uuid
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -98,10 +97,5 @@ class BaseEntity
     public function setUpdatedAtValue(): void
     {
         $this->updatedAt = new \DateTimeImmutable();
-    }
-
-    public function getUuidAsString(): string
-    {
-        return Uuid::fromBinary($this->id)->toRfc4122();
     }
 }
